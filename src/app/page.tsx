@@ -13,6 +13,13 @@ export default function Page() {
 
   return (
     <div className="flex h-full w-96 max-w-full flex-col px-1 md:w-[1008px]">
+      <nav className="my-4 flex flex-wrap gap-2">
+  <a className="rounded border px-3 py-1 text-sm hover:bg-gray-50" href="/collection">Collection</a>
+  <a className="rounded border px-3 py-1 text-sm hover:bg-gray-50" href="/vote">Vote</a>
+  <a className="rounded border px-3 py-1 text-sm hover:bg-gray-50" href="/rewards">Rewards</a>
+  <a className="rounded border px-3 py-1 text-sm hover:bg-gray-50" href="/mini">Mini App Entry</a>
+  <a className="rounded border px-3 py-1 text-sm hover:bg-gray-50" href="/ok">OK (sanity)</a>
+</nav>
       <section className="mt-6 mb-6 flex w-full flex-col md:flex-row">
         <div className="flex w-full flex-row items-center justify-between gap-2 md:gap-0">
           <a
