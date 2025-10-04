@@ -1,32 +1,46 @@
 'use client';
 
-import { useAccount } from 'wagmi';
-import WalletWrapper from 'src/components/WalletWrapper';
-import NetworkGuard from 'src/components/NetworkGuard';
+import { useEffect, useState } from 'react';
+import { useAccount, useChainId, useChains, useSwitchChain } from 'wagmi';
+import { baseSepolia } from 'wagmi/chains';
 
-export default function Page() {
-  const { address, isConnected } = useAccount();
+export default function NetworkGuard() {
+  const { isConnected } = useAccount();
+  const chainId = useChainId();                     // current chain id
+  const chains = useChains();                       // array of configured chains
+  const { switchChain } = useSwitchChain();         // chain switcher
+  const [message, setMessage] = useState<string>('');
+
+  const current = chains.find((c) => c.id === chainId);
+  const onBaseSepolia = chainId === baseSepolia.id;
+
+  useEffect(() => {
+    if (!isConnected) {
+      setMessage('Not connected');
+      return;
+    }
+    setMessage(onBaseSepolia ? 'On Base Sepolia' : `On ${current?.name ?? 'Unknown'} — switch recommended`);
+  }, [isConnected, onBaseSepolia, current]);
+
+  if (!isConnected) {
+    return (
+      <div className="rounded border px-3 py-2 text-sm">
+        Network: Not connected
+      </div>
+    );
+  }
 
   return (
-    <main className="mx-auto max-w-xl p-6">
-      <h1 className="text-2xl font-semibold">Mini App Entry</h1>
-      <p className="text-gray-600 mt-1">Testnet: Base Sepolia (Chain ID 84532)</p>
-
-      {/* Network status + switch helper */}
-      <div className="mt-4">
-        <NetworkGuard />
-      </div>
-
-      <div className="mt-6">
-        {!isConnected ? (
-          <WalletWrapper className="w-full" text="Connect to continue" />
-        ) : (
-          <div className="rounded border p-4">
-            <p className="text-sm text-gray-700">Connected:</p>
-            <code className="break-all">{address}</code>
-          </div>
-        )}
-      </div>
-    </main>
+    <div className="rounded border px-3 py-2 text-sm flex items-center gap-3">
+      <span>Network: {message}</span>
+      {!onBaseSepolia && switchChain && (
+        <button
+          className="rounded border px-2 py-1 text-xs"
+          onClick={() => switchChain({ chainId: baseSepolia.id })}
+        >
+          Switch to Base Sepolia
+        </button>
+      )}
+    </div>
   );
 }
