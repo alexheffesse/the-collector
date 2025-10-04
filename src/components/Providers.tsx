@@ -8,16 +8,12 @@ import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { baseSepolia } from 'viem/chains';
 
 const queryClient = new QueryClient();
-const wcProjectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID as string;
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <OnchainKitProvider
-          chain={baseSepolia}
-          walletConnectProjectId={wcProjectId}
-        >
+        <OnchainKitProvider chain={baseSepolia}>
           {children}
         </OnchainKitProvider>
       </QueryClientProvider>
