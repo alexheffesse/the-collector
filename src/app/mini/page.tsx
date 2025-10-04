@@ -1,26 +1,27 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAccount, useChainId, useChains, useSwitchChain } from 'wagmi';
+import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
 
 export default function NetworkGuard() {
   const { isConnected } = useAccount();
-  const chainId = useChainId();          // current chain id
-  const chains = useChains();            // array of configured chains (no object destructuring)
-  const { switchChain } = useSwitchChain();
-  const [message, setMessage] = useState<string>('');
+  const chainId = useChainId();                 // current connected chain id (undefined if not connected)
+  const { switchChain } = useSwitchChain();     // chain switcher
+  const [message, setMessage] = useState<string>('Not connected');
 
-  const current = chains.find((c) => c.id === chainId);
   const onBaseSepolia = chainId === baseSepolia.id;
+  const currentName = onBaseSepolia
+    ? 'Base Sepolia'
+    : (typeof chainId === 'number' ? `Chain ${chainId}` : 'Unknown');
 
   useEffect(() => {
     if (!isConnected) {
       setMessage('Not connected');
       return;
     }
-    setMessage(onBaseSepolia ? 'On Base Sepolia' : `On ${current?.name ?? 'Unknown'} — switch recommended`);
-  }, [isConnected, onBaseSepolia, current]);
+    setMessage(onBaseSepolia ? 'On Base Sepolia' : `On ${currentName} — switch recommended`);
+  }, [isConnected, onBaseSepolia, currentName]);
 
   if (!isConnected) {
     return (
