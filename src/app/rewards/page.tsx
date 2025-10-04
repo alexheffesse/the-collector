@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
 import WalletWrapper from 'src/components/WalletWrapper';
+import NetworkGuard from 'src/components/NetworkGuard';
 
 type Badges = { connected?: boolean; voted?: boolean };
 
@@ -81,7 +82,13 @@ export default function RewardsPage() {
       <h1 className="text-2xl font-semibold">Rewards</h1>
       <p className="text-gray-600 mt-1">Non-financial 'Collector XP' and badges.</p>
 
-      <div className="mt-4 mb-4 flex items-center gap-3">
+      {/* Network status + switch helper */}
+      <div className="mt-3 mb-3">
+        <NetworkGuard />
+      </div>
+
+      {/* Connect / Disconnect block */}
+      <div className="mt-2 mb-4 flex items-center gap-3">
         {!isConnected ? (
           <WalletWrapper className="w-[280px] max-w-full" text="Connect wallet" />
         ) : (
