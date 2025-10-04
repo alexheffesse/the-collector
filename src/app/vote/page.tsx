@@ -3,12 +3,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAccount, useDisconnect } from 'wagmi';
 import WalletWrapper from 'src/components/WalletWrapper';
+import NetworkGuard from 'src/components/NetworkGuard';
 
 type Option = {
   id: string;
-  label: string;        // e.g., "Artist — Work (Year)"
-  note?: string;        // short blurb
-  link?: string;        // optional Notion/provenance link
+  label: string;
+  note?: string;
+  link?: string;
 };
 
 // ---- Configure your poll here ----
@@ -87,6 +88,11 @@ export default function Page() {
       <p className="text-gray-600 mt-1">
         One vote per wallet (local-only demo). Final on-chain vote comes later.
       </p>
+
+      {/* Network status + switch helper */}
+      <div className="mt-3 mb-3">
+        <NetworkGuard />
+      </div>
 
       <div className="mt-4 mb-6 flex items-center gap-3">
         {!isConnected ? (
@@ -178,3 +184,4 @@ export default function Page() {
     </main>
   );
 }
+
