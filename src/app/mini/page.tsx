@@ -6,9 +6,9 @@ import { baseSepolia } from 'wagmi/chains';
 
 export default function NetworkGuard() {
   const { isConnected } = useAccount();
-  const chainId = useChainId();                     // current chain id
-  const chains = useChains();                       // array of configured chains
-  const { switchChain } = useSwitchChain();         // chain switcher
+  const chainId = useChainId();          // current chain id
+  const chains = useChains();            // array of configured chains (no object destructuring)
+  const { switchChain } = useSwitchChain();
   const [message, setMessage] = useState<string>('');
 
   const current = chains.find((c) => c.id === chainId);
