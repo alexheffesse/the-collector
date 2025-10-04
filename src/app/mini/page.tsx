@@ -2,6 +2,7 @@
 
 import { useAccount } from 'wagmi';
 import WalletWrapper from 'src/components/WalletWrapper';
+import NetworkGuard from 'src/components/NetworkGuard';
 
 export default function Page() {
   const { address, isConnected } = useAccount();
@@ -10,6 +11,11 @@ export default function Page() {
     <main className="mx-auto max-w-xl p-6">
       <h1 className="text-2xl font-semibold">Mini App Entry</h1>
       <p className="text-gray-600 mt-1">Testnet: Base Sepolia (Chain ID 84532)</p>
+
+      {/* Network status + switch helper */}
+      <div className="mt-4">
+        <NetworkGuard />
+      </div>
 
       <div className="mt-6">
         {!isConnected ? (
