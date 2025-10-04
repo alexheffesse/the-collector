@@ -1,26 +1,30 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAccount, useChains, useSwitchChain } from 'wagmi';
+import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
 
 export default function NetworkGuard() {
-  const { isConnected, chainId } = useAccount();
-  const { chains } = useChains();
-  const { switchChainAsync } = useSwitchChain();
-  const [message, setMessage] = useState<string>('');
+  const { isConnected } = useAccount();
+  const chainId = useChainId();                 // current chain id (undefined if not connected)
+  const { switchChain } = useSwitchChain();     // chain switcher
+  const [message, setMessage] = useState('Not connected');
 
-  // derive chain name for display
-  const current = chains.find((c) => c.id === chainId);
   const onBaseSepolia = chainId === baseSepolia.id;
+  const currentName =
+    onBaseSepolia
+      ? 'Base Sepolia'
+      : typeof chainId === 'number'
+        ? `Chain ${chainId}`
+        : 'Unknown';
 
   useEffect(() => {
     if (!isConnected) {
       setMessage('Not connected');
       return;
     }
-    setMessage(onBaseSepolia ? 'On Base Sepolia' : `On ${current?.name ?? 'Unknown'} — switch recommended`);
-  }, [isConnected, onBaseSepolia, current]);
+    setMessage(onBaseSepolia ? 'On Base Sepolia' : `On ${currentName} — switch recommended`);
+  }, [isConnected, onBaseSepolia, currentName]);
 
   if (!isConnected) {
     return (
@@ -33,10 +37,10 @@ export default function NetworkGuard() {
   return (
     <div className="rounded border px-3 py-2 text-sm flex items-center gap-3">
       <span>Network: {message}</span>
-      {!onBaseSepolia && (
+      {!onBaseSepolia && switchChain && (
         <button
           className="rounded border px-2 py-1 text-xs"
-          onClick={() => switchChainAsync({ chainId: baseSepolia.id })}
+          onClick={() => switchChain({ chainId: baseSepolia.id })}
         >
           Switch to Base Sepolia
         </button>
