@@ -7,21 +7,7 @@ import './global.css'
 import '@coinbase/onchainkit/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 
-import { Geist, Geist_Mono } from 'next/font/google' // ⟵ NEW
 import Providers from 'src/components/Providers'
-
-// ⟵ NEW: instantiate the fonts and expose CSS variables
-const geist = Geist({
-  subsets: ['latin'],
-  variable: '--font-geist',
-  display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
-})
-const geistMono = Geist_Mono({
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
-  display: 'swap',
-})
 
 export const viewport = {
   width: 'device-width',
@@ -48,19 +34,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* ⟵ NEW: apply the font variables + keep your existing classes */}
-      <body
-        className={`${geist.variable} ${geistMono.variable} min-h-screen bg-black text-white antialiased`}
-      >
+      {/* System font stack comes from global.css */}
+      <body className="min-h-screen bg-black text-white antialiased">
         <Providers>
           <header className="w-full">
             <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
               {/* Brand / Home link */}
-              <Link
-                href="/"
-                className="text-lg font-semibold tracking-tight"
-                // Later we’ll swap this to a Logo component using Geist
-              >
+              <Link href="/" className="text-lg font-semibold tracking-tight">
                 The Collector
               </Link>
 
@@ -92,3 +72,4 @@ export default function RootLayout({
     </html>
   )
 }
+
