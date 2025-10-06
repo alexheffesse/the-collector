@@ -24,7 +24,7 @@ export default function Logo({ size = 'md', showSymbol = false }: LogoProps) {
     <div className="flex items-center gap-2">
       {showSymbol && Symbol}
       <span className={`font-semibold leading-none tracking-[-0.01em] ${sizeClass}`}>
-        The&nbsp;Collector
+        Collector
       </span>
     </div>
   );
