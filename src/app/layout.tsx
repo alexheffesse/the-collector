@@ -1,40 +1,66 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { NEXT_PUBLIC_URL } from '../config';
+// the-collector/src/app/layout.tsx
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import { NEXT_PUBLIC_URL } from '../config'
 
-import './global.css';
-import '@coinbase/onchainkit/styles.css';
-import '@rainbow-me/rainbowkit/styles.css';
+import './global.css'
+import '@coinbase/onchainkit/styles.css'
+import '@rainbow-me/rainbowkit/styles.css'
 
-import Providers from 'src/components/Providers';
+import { Geist, Geist_Mono } from 'next/font/google' // ⟵ NEW
+import Providers from 'src/components/Providers'
+
+// ⟵ NEW: instantiate the fonts and expose CSS variables
+const geist = Geist({
+  subsets: ['latin'],
+  variable: '--font-geist',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+})
+const geistMono = Geist_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+  display: 'swap',
+})
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1.0,
-};
+}
 
 export const metadata: Metadata = {
   title: 'The Collector — Community-Governed Art on Base',
-  description: 'Join early curators, vote on acquisitions, and help build a transparent cultural treasury.',
+  description:
+    'Join early curators, vote on acquisitions, and help build a transparent cultural treasury.',
   openGraph: {
     title: 'The Collector — Community-Governed Art on Base',
-    description: 'Join early curators, vote on acquisitions, and help build a transparent cultural treasury.',
+    description:
+      'Join early curators, vote on acquisitions, and help build a transparent cultural treasury.',
     images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
   },
   metadataBase: new URL(NEXT_PUBLIC_URL || 'https://example.com'),
-};
+}
 
 export default function RootLayout({
   children,
-}: { children: React.ReactNode }) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-black text-white antialiased">
+      {/* ⟵ NEW: apply the font variables + keep your existing classes */}
+      <body
+        className={`${geist.variable} ${geistMono.variable} min-h-screen bg-black text-white antialiased`}
+      >
         <Providers>
           <header className="w-full">
             <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
               {/* Brand / Home link */}
-              <Link href="/" className="text-lg font-semibold tracking-tight">
+              <Link
+                href="/"
+                className="text-lg font-semibold tracking-tight"
+                // Later we’ll swap this to a Logo component using Geist
+              >
                 The Collector
               </Link>
 
@@ -60,12 +86,9 @@ export default function RootLayout({
             </div>
           </header>
 
-          <main className="mx-auto max-w-6xl px-4">
-            {children}
-          </main>
+          <main className="mx-auto max-w-6xl px-4">{children}</main>
         </Providers>
       </body>
     </html>
-  );
+  )
 }
-
