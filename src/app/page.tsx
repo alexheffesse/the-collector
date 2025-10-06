@@ -9,8 +9,7 @@ export default function Home() {
       </h1>
 
       <p className="mt-4 text-base md:text-lg opacity-80">
-        A community-governed art collection on Base. Join early curators, vote on acquisitions,
-        and help build a transparent cultural treasury.
+        An art collection built by all of us. We will outpace the museum model for profit and culture.
       </p>
 
       <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
