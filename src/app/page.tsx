@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <section className="mx-auto max-w-4xl text-center py-16 md:py-24">
       <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">
-        The Collector
+        Collector
       </h1>
 
       <p className="mt-4 text-base md:text-lg opacity-80">
