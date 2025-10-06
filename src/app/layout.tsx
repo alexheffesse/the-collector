@@ -16,11 +16,11 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'The Collector — Community-Governed Art on Base',
+  title: 'Collector — Community-Governed Art on Base',
   description:
     'Join early curators, vote on acquisitions, and help build a transparent cultural treasury.',
   openGraph: {
-    title: 'The Collector — Community-Governed Art on Base',
+    title: 'Collector — Community-Governed Art on Base',
     description:
       'Join early curators, vote on acquisitions, and help build a transparent cultural treasury.',
     images: [`${NEXT_PUBLIC_URL}/vibes/vibes-19.png`],
