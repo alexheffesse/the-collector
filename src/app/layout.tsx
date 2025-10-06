@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { NEXT_PUBLIC_URL } from '../config'
+import Logo from 'src/components/Logo'
 
 import './global.css'
 import '@coinbase/onchainkit/styles.css'
@@ -40,8 +41,8 @@ export default function RootLayout({
           <header className="w-full">
             <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
               {/* Brand / Home link */}
-              <Link href="/" className="text-lg font-semibold tracking-tight">
-                The Collector
+              <Link href="/" aria-label="Home">
+                <Logo size="sm" />
               </Link>
 
               {/* CTAs */}
